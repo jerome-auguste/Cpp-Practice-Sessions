@@ -25,7 +25,7 @@ int main()
         ppid = getppid();
         rand_nb = rand() % 99 + 1;
 
-        printf("Current pid: %d \r\nParent pid: %d \r\n", (pid, ppid)) ;
+        printf("Current pid: %d \r\nParent pid: %d \r\n", pid, ppid);
         printf("Random number: %d \r\n", rand_nb);
 
         sleep(1);
