@@ -8,7 +8,8 @@
 //Lorsque le processus est kill depuis un autre terminal avec l'option -s INT, le message apparaît, toutefois, lorsqu'il
 //n'y a pas les options, le message n'apparaît pas
 //Handle SIGTERM permet d'afficher le message lorsque le processus est kill sans argument
-//Avec les options -s KILL, le message n'apparaît pas
+//Avec les options -s KILL, le message n'apparaît pas, il ne peut pas être affiché
+//Si le processus père est kill, le terminal se ferme
 
 
 // for printf()
