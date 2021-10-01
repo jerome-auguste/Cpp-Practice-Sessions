@@ -49,7 +49,9 @@ int main()
 
 
     while (running) {
+        //handling CTRL+C
         sigaction(SIGINT, &action, NULL);
+        //handling 'kill' command
         sigaction(SIGTERM, &action, NULL);
 
 
@@ -62,6 +64,7 @@ int main()
 
         sleep(1);
     }
+    //exit function when killing (except for kill -9)
     int i = atexit(exit_message);
     
 
