@@ -5,6 +5,10 @@
  * server_2.c
  */
 
+//Lorsque le processus est kill depuis un autre terminal avec l'option -s INT, le message apparaît, toutefois, lorsqu'il
+//n'y a pas les options, le message n'apparaît pas
+//Handle SIGTERM permet d'afficher le message lorsque le processus est kill sans argument
+
 
 // for printf()
 #include <stdio.h>
@@ -35,9 +39,6 @@ int main()
     action.sa_handler = &stop_handler;
     action.sa_flags=0;
 
-    //Lorsque le processus est kill depuis un autre terminal avec l'option -s INT, le message apparaît, toutefois, lorsqu'il
-    //n'y a pas les options, le message n'apparaît pas
-    //Handle SIGTERM permet d'afficher le message lorsque le processus est kill sans argument
 
     while (running) {
         sigaction(SIGINT, &action, NULL);
