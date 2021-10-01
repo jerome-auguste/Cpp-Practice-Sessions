@@ -52,7 +52,7 @@ int main()
         exit(EXIT_FAILURE);
     }
 
-    //Wait for child process to be ended before killing
+    //Wait for child process to be ended before continuing
     int waitstatus;
     wait(&waitstatus);
 
