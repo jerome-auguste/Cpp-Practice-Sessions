@@ -8,6 +8,7 @@
 //Lorsque le processus est kill depuis un autre terminal avec l'option -s INT, le message apparaît, toutefois, lorsqu'il
 //n'y a pas les options, le message n'apparaît pas
 //Handle SIGTERM permet d'afficher le message lorsque le processus est kill sans argument
+//Avec les options -s KILL, le message n'apparaît pas
 
 
 // for printf()
@@ -47,7 +48,7 @@ int main()
         ppid = getppid();
         rand_nb = rand() % 99 + 1;
 
-        printf("Current pid: %d \r\nParent pid: %d \r\n", (pid, ppid)) ;
+        printf("Current pid: %d \r\nParent pid: %d \r\n", pid, ppid) ;
         printf("Random number: %d \r\n", rand_nb);
 
         sleep(1);
