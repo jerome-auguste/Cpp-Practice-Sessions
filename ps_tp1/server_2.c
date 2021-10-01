@@ -10,6 +10,8 @@
 //Handle SIGTERM permet d'afficher le message lorsque le processus est kill sans argument
 //Avec les options -s KILL, le message n'apparaît pas, il ne peut pas être affiché
 //Si le processus père est kill, le terminal se ferme
+//Lorsque l'on ne modifie pas la variable running, seul le kill -9 permet d'arrêter le processus
+//La fonction est appelée pour CTRL+C, kill mais pas pour kill -9
 
 
 // for printf()
@@ -30,6 +32,10 @@ void stop_handler( int sig ) {
     running = false;
 }
 
+void exit_message() {
+    printf("Allez bisous!\n");
+}
+
 int main()
 {   
     // TODO
@@ -45,6 +51,8 @@ int main()
     while (running) {
         sigaction(SIGINT, &action, NULL);
         sigaction(SIGTERM, &action, NULL);
+
+
         pid = getpid();
         ppid = getppid();
         rand_nb = rand() % 99 + 1;
@@ -54,6 +62,7 @@ int main()
 
         sleep(1);
     }
+    int i = atexit(exit_message);
     
 
     return EXIT_SUCCESS;
