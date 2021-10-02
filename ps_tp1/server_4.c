@@ -5,6 +5,10 @@
  * server_4.c
  */
 
+//Lors d'un kill, bien que les fd soient close, l'un des processus n'envoie pas tous les signaux. Lorsque le child est kill,
+//seuls ses signaux sont print, lorsqu'un parent est kill, ses signaux et le atexit du child sont print (mais il ne passe pas par
+//le stop_handler)
+
 // for printf()
 #include <stdio.h>
 // For rand(), srand(), sleep(), EXIT_SUCCESS
@@ -45,6 +49,9 @@ int main()
 
     //handling 'kill' command
     sigaction(SIGTERM, &action, NULL);
+
+    //handling pipe closing
+    sigaction(SIGPIPE, &action, NULL);
 
     //pipe between parent and child
     int pipefd[2];
@@ -100,6 +107,8 @@ int main()
             write(pipefd[1], &buf, sizeof(buf));
 
             sleep(1);
+
+
         }
 
         close(pipefd[1]);
@@ -114,8 +123,6 @@ int main()
     //}
 
     atexit(exit_message);
-
-    //Lors d'un kill, bien que les fd soient close, l'un des processus ne passe pas par un atexit.
     
 
     return EXIT_SUCCESS;
