@@ -65,25 +65,30 @@ int main()
     }
 
     if (cpid == 0) {
+        close(pipefd[1]);
 
         while (running) {
 
             if (read(pipefd[0], &buf, sizeof(buf))>0){
                 printf("\nCurrent pid: %d\nParent pid: %d\n", buf[0], buf[1]) ;
                 printf("Random number: %d\n", buf[2]);
+                sleep(1);
             }
-
-            sleep(1);
+            else {
+                running=false;
+            }
         }
 
+        close(pipefd[0]);
         
-
+        
     }
 
     else {
         int pid = getpid();
         int ppid = getppid();
         int rand_nb;
+        close(pipefd[0]);
 
         while (running) {
 
@@ -97,6 +102,8 @@ int main()
             sleep(1);
         }
 
+        close(pipefd[1]);
+
     }
     
     //Wait for child process to be ended before continuing
@@ -107,6 +114,8 @@ int main()
     //}
 
     atexit(exit_message);
+
+    //Lors d'un kill, bien que les fd soient close, l'un des processus ne passe pas par un atexit.
     
 
     return EXIT_SUCCESS;
