@@ -14,7 +14,7 @@
 //kill le processus fils
 
 //A l'aide de wait, on peut lancer le processus père lorsque le processus fils est kill.
-//Le code renvoyé est 0 pour un kill ou un kill -s INT, et 9 pour un kill -9
+//Le code renvoyé est 0 pour un kill un kill -s INT et un kill -9
 
 
 // for printf()
@@ -56,7 +56,7 @@ int main()
     int waitstatus;
     wait(&waitstatus);
 
-    printf("\nwaitstatus: %d\n", waitstatus);
+    printf("\nwexitstatus: %d\n", WEXITSTATUS(waitstatus));
 
     int pid;
     int ppid;
