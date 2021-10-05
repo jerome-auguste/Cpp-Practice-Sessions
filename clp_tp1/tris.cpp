@@ -14,6 +14,7 @@
 #include <ctime>
 
 #include <vector>
+#include <algorithm>
 
 
 void print_tab(const std::vector< int > &tab) {
@@ -44,6 +45,18 @@ void sort_tab_1(std::vector< int > &tab) {
     }
 }
 
+bool less(int a, int b) {
+    return a<b;
+}
+
+bool greater (int a, int b) {
+    return a>b;
+}
+
+void sort_tab_2(std::vector< int > &tab, bool (*comp)(int, int)) {
+    std::sort(tab.begin(), tab.end(), comp);
+}
+
 void test_11() {
     std::cout << std::endl << "*** test_11 ***" << std::endl;
     const std::vector< int > tab{ 1, -2, 3, -4, 5, -6 };
@@ -71,13 +84,30 @@ void test_13() {
     std::cout << std::endl;
 }
 
+void test_14() {
+    std::cout << std::endl << "*** test_14 ***" << std::endl;
+    std::vector< int > tab_greater (10);
+    random_tab(tab_greater);
+    std::vector< int > tab_less = tab_greater;
+    std::cout << std::endl << "Random tab" << std::endl;
+    print_tab(tab_greater);
+    sort_tab_2(tab_greater, greater);
+    std::cout << std::endl << "Sorted tab with greater" << std::endl;
+    print_tab(tab_greater);
+    sort_tab_2(tab_less, less);
+    std::cout << std::endl << "Sorted tab with less" << std::endl;
+    print_tab(tab_less);
+    std::cout << std::endl;
+}
+
 int main()
 {
     std::srand( std::time( nullptr ));
 
     //test_11();
     //test_12();
-    test_13();
+    //test_13();
+    test_14();
 
     return 0;
 }
