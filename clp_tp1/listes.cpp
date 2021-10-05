@@ -16,41 +16,62 @@
 #include <algorithm>
 
 std::forward_list< int > random_list( int length ) {
+
+    //Random list generation
     std::forward_list< int > list;
+
     for( int i=0; i<length; i++ ) {
         list.push_front( rand() % 100 );
     }
+
     return list;
 }
 
 void print_list( const std::forward_list< int > &list ) {
+
     std::cout << "( ";
+
     for( auto el : list ) std::cout << el << " ";
+
     std::cout << ")" << std::endl;
 }
 
 std::forward_list< int > map_iter( const std::forward_list< int > list, std::function< int( int ) > fct ) {
+    //Interative function over the element of the list
+
+    //Create a new list that will contain the modified values
     std::forward_list< int > modified_list;
+
     for( auto el : list ) {
         modified_list.push_front(fct(el));
     }
+
     return modified_list;
 }
 
 std::forward_list< int > filter_iter( const std::forward_list< int > list, std::function< bool( int ) > predicate ) {
+    //Filter a list depending on a predicate
+
+    //Create a new list that will contain filtered value according to the predicate
     std::forward_list< int > filtered_list;
+
     for(auto el : list) {
         if(predicate(el)) {
             filtered_list.push_front(el);
         }
     }
+
     return filtered_list;
 }
 
 int reduce( const std::forward_list< int > list, int n, std::function< int( int, int ) > red_fct ) {
+    //Reduction function (min, max...)
+
     bool first_el = true;
     int res;
+
     for( auto el : list ) {
+        //First element specificity
         if (first_el) {
             res = red_fct(n, el);
             first_el = false;

@@ -32,10 +32,15 @@ void random_tab(std::vector< int > &tab) {
 }
 
 void sort_tab_1(std::vector< int > &tab) {
+
+    //Selection sort
     for (int i=0; i<tab.size();i++) {
+
         int j_min = i;
         int min = tab[i];
+
         for (int j=i; j<tab.size(); j++) {
+
             if (tab[j]<min) {
                 min = tab[j];
                 j_min = j;
