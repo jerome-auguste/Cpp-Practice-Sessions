@@ -13,6 +13,8 @@
 #include <cstdlib>
 #include <ctime>
 
+#include <algorithm>
+
 std::forward_list< int > random_list( int length ) {
     std::forward_list< int > list;
     for( int i=0; i<length; i++ ) {
@@ -43,6 +45,21 @@ std::forward_list< int > filter_iter( const std::forward_list< int > list, std::
         }
     }
     return filtered_list;
+}
+
+int reduce( const std::forward_list< int > list, int n, std::function< int( int, int ) > red_fct ) {
+    bool first_el = true;
+    int res;
+    for( auto el : list ) {
+        if (first_el) {
+            res = red_fct(n, el);
+            first_el = false;
+        }
+        else {
+            res = red_fct(res, el);
+        }
+    }
+    return res;
 }
 
 void test_21() {
@@ -108,6 +125,24 @@ void test_24() {
     std::cout << std::endl;
 }
 
+void test_25() {
+    std::cout << std::endl << "*** test_25 ***" << std::endl;
+
+    const std::forward_list< int > list = random_list(10);
+    std::cout << std::endl << "Random list" << std::endl;
+    print_list(list);
+
+    int min_result = reduce(list, std::numeric_limits<int>::max(), []( int res, int el ){ return std::min(res, el); });
+    std::cout << std::endl << "min value" << std::endl << min_result << std::endl;
+
+    int max_result = reduce(list, std::numeric_limits<int>::min(), []( int res, int el ){ return std::max(res, el); });
+    std::cout << std::endl << "max value" << std::endl << max_result << std::endl;
+
+    std::cout << std::endl;
+}
+
+
+
 int main()
 {
     std::srand( std::time( nullptr ));
@@ -115,7 +150,8 @@ int main()
     //test_21();
     //test_22();
     //test_23();
-    test_24();
+    //test_24();
+    test_25();
 
     return 0;
 }
