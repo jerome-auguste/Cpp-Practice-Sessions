@@ -87,13 +87,35 @@ void test_23() {
     std::cout << std::endl;
 }
 
+void test_24() {
+    std::cout << std::endl << "*** test_24 ***" << std::endl;
+
+    const std::forward_list< int > list = random_list(10);
+    std::cout << std::endl << "Random list" << std::endl;
+    print_list(list);
+
+    int coef = rand()%5 + 1;
+    std::cout << std::endl << "Times" << std::endl << coef << std::endl;
+
+    std::forward_list< int > three_times_list = map_iter(list, [coef]( int a ){ return coef*a; });
+    std::cout << std::endl << coef << "* list" << std::endl;
+    print_list(three_times_list);
+
+    std::forward_list< int > filtered_list = filter_iter(three_times_list, []( int a ){ return a%2==0; });
+    std::cout << std::endl << "filtered list" << std::endl;
+    print_list(filtered_list);
+
+    std::cout << std::endl;
+}
+
 int main()
 {
     std::srand( std::time( nullptr ));
 
     //test_21();
     //test_22();
-    test_23();
+    //test_23();
+    test_24();
 
     return 0;
 }
