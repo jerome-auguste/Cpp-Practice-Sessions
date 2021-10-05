@@ -125,11 +125,11 @@ void test_15() {
     std::cout << std::endl << "Random tab" << std::endl;
     print_tab(tab_asc);
 
-    sort_tab_3(tab_asc, []( int a, int b ) { return a<b; });
+    sort_tab_3(tab_asc, []( int a, int b ) { return abs(a)<abs(b); });
     std::cout << std::endl << "Sorted tab in ascending order" << std::endl;
     print_tab(tab_asc);
 
-    sort_tab_3(tab_desc, []( int a, int b ) { return a>b; });
+    sort_tab_3(tab_desc, []( int a, int b ) { return abs(a)>abs(b); });
     std::cout << std::endl << "Sorted tab in descending order" << std::endl;
     print_tab(tab_desc);
 
