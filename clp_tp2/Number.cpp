@@ -14,5 +14,12 @@
 #include "Number.hpp"
 
 
+void Number::Digit::print( std::ostream & out ) const {
 
+    if (next_ != nullptr) {
+        next_->print(out);
+    }
+    out << digit_;
+    
+}
 
