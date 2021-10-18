@@ -83,6 +83,19 @@ int reduce( const std::forward_list< int > list, int n, std::function< int( int,
     return res;
 }
 
+int fold_left_aux( std::forward_list< int >::const_iterator it, std::forward_list< int >::const_iterator end, int n, std::function< int( int, int ) > red_fct ) {
+
+    if (std::next(it,1) == end) {
+        return red_fct(n, *it);
+    }
+
+    return red_fct(*it, fold_left_aux(std::next(it,1), end, n, red_fct));
+}
+
+int fold_left(const std::forward_list< int > list, int n, std::function< int( int, int ) > red_fct) {
+    return fold_left_aux(list.cbegin(), list.cend(), n, red_fct);
+}
+
 void test_21() {
     std::cout << std::endl << "*** test_21 ***" << std::endl;
 
@@ -162,6 +175,22 @@ void test_25() {
     std::cout << std::endl;
 }
 
+void test_31() {
+    std::cout << std::endl << "*** test_31 ***" << std::endl;
+
+    const std::forward_list< int > list = random_list(10);
+    std::cout << std::endl << "Random list" << std::endl;
+    print_list(list);
+
+    int min_result = fold_left(list, std::numeric_limits<int>::max(), []( int res, int el ){ return std::min(res, el); });
+    std::cout << std::endl << "min value" << std::endl << min_result << std::endl;
+
+    int max_result = fold_left(list, std::numeric_limits<int>::min(), []( int res, int el ){ return std::max(res, el); });
+    std::cout << std::endl << "max value" << std::endl << max_result << std::endl;
+
+    std::cout << std::endl;
+}
+
 
 
 int main()
@@ -172,7 +201,8 @@ int main()
     //test_22();
     //test_23();
     //test_24();
-    test_25();
+    //test_25();
+    test_31();
 
     return 0;
 }
