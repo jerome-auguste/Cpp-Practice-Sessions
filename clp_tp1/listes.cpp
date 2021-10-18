@@ -96,6 +96,43 @@ int fold_left(const std::forward_list< int > list, int n, std::function< int( in
     return fold_left_aux(list.cbegin(), list.cend(), n, red_fct);
 }
 
+std::forward_list< int > map_aux(std::forward_list< int >::const_iterator it, std::forward_list< int >::const_iterator end, std::function< int( int ) > fct) {
+    std::forward_list< int > res_list;
+    if (std::next(it,1) == end) {
+        res_list.push_front(fct(*it));
+        return res_list;
+    }
+    res_list.merge(map_aux(std::next(it, 1), end, fct));
+    res_list.push_front(fct(*it));
+    return res_list;
+}
+
+std::forward_list< int > map( const std::forward_list< int > list, std::function< int( int ) > fct ) {
+    return map_aux(list.cbegin(), list.cend(), fct);
+}
+
+std::forward_list< int > filter_aux( std::forward_list< int >::const_iterator it, std::forward_list< int >::const_iterator end, std::function< bool( int ) > predicate ) {
+    std::forward_list< int > filtered_list;
+    if (std::next(it,1) == end) {
+        if (predicate(*it)) {
+            filtered_list.push_front(*it);
+        }
+        return filtered_list;
+    }
+
+    filtered_list.merge(filter_aux(std::next(it, 1), end, predicate));
+
+    if (predicate(*it)) {
+        filtered_list.push_front(*it);
+    }
+
+    return filtered_list;
+}
+
+std::forward_list< int > filter( const std::forward_list< int > list, std::function< bool( int ) > predicate ) {
+    return filter_aux(list.cbegin(), list.cend(), predicate);
+}
+
 void test_21() {
     std::cout << std::endl << "*** test_21 ***" << std::endl;
 
@@ -191,6 +228,27 @@ void test_31() {
     std::cout << std::endl;
 }
 
+void test_32() {
+    std::cout << std::endl << "*** test_32 ***" << std::endl;
+
+    const std::forward_list< int > list = random_list(10);
+    std::cout << std::endl << "Random list" << std::endl;
+    print_list(list);
+
+    int coef = rand()%5 + 1;
+    std::cout << std::endl << "Times" << std::endl << coef << std::endl;
+
+    std::forward_list< int > mapped_list = map(list, [coef]( int a ){ return coef*a; });
+    std::cout << std::endl << coef << "* list" << std::endl;
+    print_list(mapped_list);
+
+    std::forward_list< int > filtered_list = filter(mapped_list, []( int a ){ return a%2==0; });
+    std::cout << std::endl << "filtered list" << std::endl;
+    print_list(filtered_list);
+
+    std::cout << std::endl;
+}
+
 
 
 int main()
@@ -202,7 +260,8 @@ int main()
     //test_23();
     //test_24();
     //test_25();
-    test_31();
+    //test_31();
+    test_32();
 
     return 0;
 }
