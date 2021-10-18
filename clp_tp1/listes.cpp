@@ -249,6 +249,28 @@ void test_32() {
     std::cout << std::endl;
 }
 
+void test_33() {
+    std::cout << std::endl << "*** test_33 ***" << std::endl;
+
+    const std::forward_list< int > list = random_list(10);
+    std::cout << std::endl << "Random list" << std::endl;
+    print_list(list);
+
+    int coef = rand()%5 + 1;
+    std::cout << std::endl << "Times" << std::endl << coef << std::endl;
+
+    std::multiplies< int > mult;
+
+    std::forward_list< int > mapped_list = map(list, [coef, mult]( int a ){ return mult(a, coef); });
+    std::cout << std::endl << coef << "* list" << std::endl;
+    print_list(mapped_list);
+
+    std::forward_list< int > filtered_list = filter(mapped_list, []( int a ){ return a%2==0; });
+    std::cout << std::endl << "filtered list" << std::endl;
+    print_list(filtered_list);
+
+    std::cout << std::endl;
+}
 
 
 int main()
@@ -261,7 +283,8 @@ int main()
     //test_24();
     //test_25();
     //test_31();
-    test_32();
+    //test_32();
+    test_33();
 
     return 0;
 }
