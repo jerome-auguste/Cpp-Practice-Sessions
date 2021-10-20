@@ -20,6 +20,14 @@ public:
         first_ = new Digit(*(n.first_));
     }
 
+    Number(std::string s) {
+        if (s.length() == 0) {
+            throw std::invalid_argument("Empty string");
+        }
+        first_ = new Digit(s);
+
+    }
+
     Number & operator=(const Number & n) {
         Number tmp(n);
         std::swap(first_, tmp.first_);
@@ -51,6 +59,29 @@ private:
             digit_( l%number_base )
             , next_( ( l>=number_base )? new Digit( l/number_base ): nullptr ) //if = ? et else = :
             {}
+        
+        Digit(std::string s) {
+            unsigned int pow = 1;
+            digit_ = 0;
+            if (! std::isdigit( s.back())) {
+                throw std::invalid_argument("Not a digit");
+            }
+            unsigned int c = static_cast< unsigned int >( s.back() - '0' ) * pow;
+
+            while ((digit_ + c < number_base) && (s.length() > 0)) {
+                digit_ += c;
+                pow *= 10;
+                if (! std::isdigit(s.back())) {
+                    throw std::invalid_argument("Not a digit");
+                }
+                s.pop_back();
+                c = static_cast< unsigned int >( s.back() - '0' ) * pow;
+                }
+
+                if (s.length() == 0) next_ = nullptr;
+                else next_ = new Digit{ s };
+
+        }
         
         ~Digit() { delete next_; }
 
@@ -110,11 +141,13 @@ inline std::ostream & operator<<( std::ostream & out, const Number & n )
 
 inline Number factorial( unsigned int i ) {
         if (i==1) {
-            return Number(1);
+            return *new Number(1);
         }
-        Number n{factorial(i-1)};
+        Number n = factorial(i-1);
         n.multiply(i);
         return n;
 }
+
+std::istream & operator>>( std::istream & in, Number & n );
 
 #endif

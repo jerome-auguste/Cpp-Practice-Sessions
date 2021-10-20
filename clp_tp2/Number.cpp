@@ -23,3 +23,26 @@ void Number::Digit::print( std::ostream & out ) const {
     
 }
 
+std::istream & operator>>( std::istream & in, Number & n ) {
+    // TODO
+    // in est le flux d'entrée
+ 
+  // ignore les blancs au début
+    in >> std::ws;
+    std::string str_number = "";
+    while( in.good() ) {
+      int c{ in.get() };
+        if( std::isdigit( c )) {
+            // ... à vous de l'utiliser ...
+            str_number.append(std::to_string(c-48));
+            
+        }
+        else {
+            in.putback( c );
+            break;
+        }
+    }
+    n = Number(str_number);
+    return in;
+}
+

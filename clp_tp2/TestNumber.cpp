@@ -90,6 +90,27 @@ TEST( TestNumber, TestFactorial123 )
                          "72186029519906261646730733907419814952960000000000000000000000000000" );
 }
 
+TEST( TestNumber, TestStringConstructor )
+{
+    Number n{ "12345"};
+    std::ostringstream os;
+    os << n;
+    EXPECT_EQ( os.str(), "12345");
+}
+
+TEST( TestNumber, TestRead )
+{
+    Number n{ "12345" };
+    std::ostringstream os;
+    
+    std::string stringvalue = " 54321L";
+    std::istringstream stringstream (stringvalue);
+    stringstream>>n;
+    os << n;
+    EXPECT_EQ( os.str(), "54321" );
+
+}
+
 
 int main( int argc, char * argv[] )
 {
