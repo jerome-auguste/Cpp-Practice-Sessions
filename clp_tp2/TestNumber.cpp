@@ -62,6 +62,35 @@ TEST( TestNumber, TestAssignment ) {
     EXPECT_EQ( os2.str(), "1111" );
 }
 
+TEST( TestNumber, TestAdd ) {
+    Number n{ 9999UL };
+    unsigned i = 2222;
+    n.add(i);
+    std::ostringstream os;
+    os << n;
+    EXPECT_EQ( os.str(), "12221" );
+}
+
+TEST( TestNumber, TestMultiply) {
+    Number n{ 5555UL };
+    unsigned int i = 2;
+    n.multiply(i);
+    std::ostringstream os;
+    os << n;
+    EXPECT_EQ( os.str(), "11110" );
+}
+
+TEST( TestNumber, TestFactorial123 )
+{
+    std::ostringstream os;
+    Number fact = factorial( 123 );
+    os << fact;
+    EXPECT_EQ( os.str(), "121463043670253296757662432418812958554542170884833823153289181618292"
+                         "358923621676688311569606126402021707358352212940477825910915704116514"
+                         "72186029519906261646730733907419814952960000000000000000000000000000" );
+}
+
+
 int main( int argc, char * argv[] )
 {
     ::testing::InitGoogleTest( &argc, argv );

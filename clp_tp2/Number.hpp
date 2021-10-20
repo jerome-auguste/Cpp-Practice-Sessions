@@ -31,6 +31,16 @@ public:
  
     void print( std::ostream & out ) const { first_->print(out); }
 
+    void add(unsigned int i) {
+        first_->add(i);
+    }
+
+    void multiply(unsigned int i)
+    {
+    first_->multiply(i);
+    }
+
+
 private:
     using DigitType = unsigned int;
     // Un seul chiffre décimal par maillon : l'objectif ici n'est pas la performance
@@ -60,6 +70,30 @@ private:
         }
 
         void print(std::ostream & out) const;
+
+        void add(unsigned int i) {
+            unsigned int intadd{ digit_ + i };
+            digit_ = intadd % number_base;
+            if( next_ != nullptr )  {
+                next_->add( intadd / number_base );
+            }
+            else if( intadd >= number_base ) {
+                next_ = new Digit{ intadd / number_base };
+            }
+        }
+
+        void multiply(unsigned int i) {
+            unsigned int intmult{ digit_ * i};
+            digit_ = intmult%number_base;
+            if( next_ != nullptr ) {
+                next_->multiply(i);
+                next_->add(intmult/number_base);
+            }
+            else if( intmult >= number_base ) next_ = new Digit{ intmult / number_base };
+        }
+
+
+
         
         DigitType digit_;
         Digit * next_;
@@ -72,6 +106,15 @@ inline std::ostream & operator<<( std::ostream & out, const Number & n )
 {
     n.print( out );
     return out;
+}
+
+inline Number factorial( unsigned int i ) {
+        if (i==1) {
+            return Number(1);
+        }
+        Number n{factorial(i-1)};
+        n.multiply(i);
+        return n;
 }
 
 #endif
