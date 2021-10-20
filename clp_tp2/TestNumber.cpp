@@ -39,6 +39,29 @@ TEST( TestNumber, TestNumberBig )
     EXPECT_EQ( os.str(), "12345123451234512345" );
 }
 
+TEST( TestNumber, TestCopy ) {
+    Number n1{ 1111UL };
+    Number n2 = n1;
+    std::ostringstream os1;
+    os1 << n1;
+    EXPECT_EQ( os1.str(), "1111" );
+    std::ostringstream os2;
+    os2 << n2;
+    EXPECT_EQ( os2.str(), "1111" );
+}
+
+TEST( TestNumber, TestAssignment ) {
+    Number n1{ 1111UL };
+    Number n2{ 2222UL };
+    n2 = n1;
+    std::ostringstream os1;
+    os1 << n1;
+    EXPECT_EQ( os1.str(), "1111" );
+    std::ostringstream os2;
+    os2 << n2;
+    EXPECT_EQ( os2.str(), "1111" );
+}
+
 int main( int argc, char * argv[] )
 {
     ::testing::InitGoogleTest( &argc, argv );
