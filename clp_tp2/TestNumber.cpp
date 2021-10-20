@@ -85,6 +85,7 @@ TEST( TestNumber, TestFactorial123 )
     std::ostringstream os;
     Number fact = factorial( 123 );
     os << fact;
+    //En base 1000000000u, le test factoriel ne fonctionne pas car le résultat est attendu en base 10
     EXPECT_EQ( os.str(), "121463043670253296757662432418812958554542170884833823153289181618292"
                          "358923621676688311569606126402021707358352212940477825910915704116514"
                          "72186029519906261646730733907419814952960000000000000000000000000000" );
