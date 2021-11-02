@@ -9,6 +9,8 @@
 
 #include <iostream>
 #include <thread>
+#include <unistd.h>
+#include <stdio.h>
 
 #include "../osyncstream.hpp"
 
@@ -26,6 +28,12 @@ public:
         // TODO : déposer dans box nb_messages nombres entiers positifs avec attente
         // aléatoire entre chaque. Afficher des messages, via un osyncstream,
         // pour suivre l'avancement.
+        for (int i=0; i<=nb_messages_; i++) {
+            std::this_thread::sleep_for( std::chrono::milliseconds( random_engine_() ));
+            { osyncstream( std::cout ) << "Message recieved " << box_.get() << "\n";}
+        }
+        
+
     }
 };
 

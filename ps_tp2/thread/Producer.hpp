@@ -9,6 +9,8 @@
 
 #include <iostream>
 #include <thread>
+#include <unistd.h>
+#include <stdio.h>
 
 #include "../osyncstream.hpp"
 
@@ -25,6 +27,12 @@ public:
     void operator()() override {
         // TODO : déposer dans box nb_messages nombres entiers positifs avec attente
         // aléatoire entre chaque. Afficher des messages pour suivre l'avancement.
+        using milliseconds = std::chrono::duration< int, std::milli >;
+        for (int i=0; i<=nb_messages_; i++) {
+            std::this_thread::sleep_for( milliseconds( random_engine_() ));
+            box_.put(i);
+            std::cout << "Message sent " << i << "\n";
+        }
     }
 };
  
