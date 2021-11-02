@@ -31,7 +31,7 @@ public:
         for (int i=0; i<=nb_messages_; i++) {
             std::this_thread::sleep_for( milliseconds( random_engine_() ));
             box_.put(i);
-            std::cout << "Sent     " << i << "\n";
+            std::cout << name_ << " sent     " << i << "\n";
         }
     }
 };

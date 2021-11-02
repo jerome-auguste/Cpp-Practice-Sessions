@@ -30,24 +30,27 @@ int main() {
     // Attendre la fin des threads
 
     // 20 messages will be transmitted between Producer and Consumer
-    int nb_message = 20;
+    int nb_message_sent = 10;
+    int nb_message_recieved = 20;
 
     Random engine( 100 );
 
     // Create the message box to send and recieve message
     MessageBox box;
 
-    // Create proucer and consumer
-    Producer prod = Producer(0, box, engine, nb_message);
-    Consumer cons = Consumer(1, box, engine, nb_message);
-
-    // Create producer thread and consumer thread
-    std::thread producer_thread(prod);
-    std::thread consumer_thread(cons);
+    // Create proucers and consumers and their threads
+    std::vector< std::thread > group;
+    unsigned int i = 0;
+    for (i=0; i<4; i++) {
+        group.push_back( std::thread{ Producer { i, box, engine, 10}});
+    }
+    group.push_back( std::thread{ Consumer { ++i, box, engine, 20}});
+    group.push_back( std::thread{ Consumer { ++i, box, engine, 20}});
 
     // Wait for other threads before ending
-    producer_thread.join();
-    consumer_thread.join();
+    for (int j=0;j<6; j++) {
+        group[j].join();
+    }
 
     return 0;
 }

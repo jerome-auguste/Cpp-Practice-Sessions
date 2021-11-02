@@ -25,8 +25,8 @@ public:
         std::unique_lock<std::mutex> lock(mutex_);
 
         // Wait for a free space
-        if (nb_msg_ == box_size_) {
-            free_space_.wait(lock);
+        if (nb_msg_ >= box_size_) {
+            free_space_.wait(lock, [this]{return this->nb_msg_ < this->box_size_;});
         }
 
         // Send message
