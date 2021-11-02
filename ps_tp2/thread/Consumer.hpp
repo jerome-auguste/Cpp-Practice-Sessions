@@ -30,7 +30,7 @@ public:
         // pour suivre l'avancement.
         for (int i=0; i<=nb_messages_; i++) {
             std::this_thread::sleep_for( std::chrono::milliseconds( random_engine_() ));
-            { osyncstream( std::cout ) << "Message recieved " << box_.get() << "\n";}
+            { osyncstream( std::cout ) << "Recieved " << box_.get() << "\n";}
         }
         
 
