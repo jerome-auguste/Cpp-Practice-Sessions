@@ -1,4 +1,4 @@
-# :computer: C/C++ Program and Dev
+# :computer: C/C++ Programming and Development
 
 Practice labs for the ProgDev course in System Programming and Programming Languages and Concepts
 
