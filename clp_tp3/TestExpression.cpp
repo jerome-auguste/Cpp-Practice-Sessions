@@ -14,7 +14,7 @@
 #include "Expression.cpp"
 #include "Nombre.cpp"
 #include "Variable.cpp"
-#include "Addition.cpp"
+#include "Multiplication.cpp"
 
  
 int main( int argc, char * argv[] ) {
@@ -97,6 +97,25 @@ TEST( TestExp, TestDestructExp ) {
     EXPECT_EQ( os.str(), std::to_string(init_nb_instance + 1));
 }
 
+TEST( TestExp, TestNomClone )
+{
+    Nombre n{ 1 };
+    Expression* copy = n.clone();
+    std::ostringstream os;
+    os << *copy;
+    EXPECT_EQ( os.str(), "1" );
+}
+
+TEST( TestExp, TestVarClone )
+{
+    Variable v{ "x" };
+    Expression* copy = v.clone();
+    std::ostringstream os;
+    os << *copy;
+    EXPECT_EQ( os.str(), "x" );
+}
+
+
 TEST( TestOp, TestAddVarNom ) {
     Variable v{ "x" };
     Nombre n{ 1 };
@@ -133,4 +152,48 @@ TEST( TestOp, TestAddDeriveConst) {
     std::ostringstream os;
     os << *derive;
     EXPECT_EQ( os.str(), "0+0");
+}
+
+TEST( TestExp, TestAddClone )
+{
+    Addition add{ new Variable{ "x" }, new Nombre{ 2 } };
+    Expression* copy = add.clone();
+    std::ostringstream os;
+    os << *copy;
+    EXPECT_EQ( os.str(), "x+2" );
+}
+
+TEST( TestExp, TestMultVarNom )
+{
+    Multiplication mult{ new Nombre{ 2 }, new Variable{ "x" } };
+    std::ostringstream os;
+    os << mult;
+    EXPECT_EQ( os.str(), "2*x" );
+}
+
+TEST( TestExp, TestMulClone )
+{
+    Multiplication mult{ new Nombre{ 3 }, new Variable{ "x" } };
+    Expression* copy = mult.clone();
+    std::ostringstream os;
+    os << *copy;
+    EXPECT_EQ( os.str(), "3*x" );
+}
+
+TEST( TestExp, TestMultDerive )
+{
+    Multiplication mult{ new Nombre{ 4 }, new Variable{ "x" } };
+    Expression* deriv = mult.derive("x");
+    std::ostringstream os;
+    os << *deriv;
+    EXPECT_EQ( os.str(), "0*x+1*4" );
+}
+
+TEST( TestExp, TestMulDeriveConst )
+{
+    Multiplication mult{ new Nombre{ 5 }, new Variable{ "x" } };
+    Expression* deriv = mult.derive("y");
+    std::ostringstream os;
+    os << *deriv;
+    EXPECT_EQ( os.str(), "0*x+0*5" );
 }

@@ -16,6 +16,11 @@ public:
         return new Nombre{ 0 };
     }
 
+    Expression* clone() const {
+        return new Nombre{value_};
+    }
+
+
 
 
 private:
