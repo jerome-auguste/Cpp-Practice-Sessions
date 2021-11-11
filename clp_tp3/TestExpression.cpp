@@ -22,14 +22,14 @@ int main( int argc, char * argv[] ) {
 }
 
 TEST( TestExp, TestNombre0 ) {
-    Nombre n = 0;
+    Nombre n{ 0 };
     std::ostringstream os;
     os << n;
     EXPECT_EQ( os.str(), "0" );
 }
 
 TEST( TestExp, TestNombre734998 ) {
-    Nombre n = 734998;
+    Nombre n{ 734998 };
     std::ostringstream os;
     os << n;
     EXPECT_EQ( os.str(), "734998" );
@@ -48,3 +48,29 @@ TEST( TestExp, TestVariableName ) {
     os << v;
     EXPECT_EQ( os.str(), "x" );
 }
+
+TEST( TestExp, TestDeriveVariable ) {
+    Variable v{ "x" };
+    Expression* deriv = v.derive("x");
+    std::ostringstream os;
+    os << *deriv;
+    EXPECT_EQ( os.str(), "1" );
+}
+
+TEST( TestExp, TestDeriveOtherVariable ) {
+    Variable v{ "a" };
+    Expression* deriv = v.derive("x");
+    std::ostringstream os;
+    os << *deriv;
+    EXPECT_EQ( os.str(), "0" );
+}
+
+
+TEST( TestExp, TestDeriveNombre ) {
+    Nombre n{ 1 };
+    Expression* deriv = n.derive("x");
+    std::ostringstream os;
+    os << *deriv;
+    EXPECT_EQ( os.str(), "0" );
+}
+

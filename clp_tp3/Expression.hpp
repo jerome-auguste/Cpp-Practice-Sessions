@@ -21,6 +21,18 @@ public:
 
     virtual void display(std::ostream & out) const = 0;
 
+    virtual Expression* derive(std::string name) const = 0;
+    /* derivative of expression with respect to "name"
+     Input:
+        - string : variable
+     Output:
+        - A newly allocated Expression* element :
+            * Derivative of Nombre with respect to any variable is 0
+            * Derivative of Variable "x" with respect to string "x" is 1
+            * Derivative of Variable "y" with respect to string "x" is 0
+     */
+
+
 private:
 };
 

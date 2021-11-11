@@ -12,6 +12,11 @@ public:
         out << value_;
     }
 
+    Expression* derive(std::string nom) const {
+        return new Nombre{ 0 };
+    }
+
+
 
 private:
     long value_;
