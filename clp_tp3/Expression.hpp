@@ -15,9 +15,11 @@
 
 class Expression {
 public:
-    Expression() {};
+    static inline unsigned int nb_inst = 0;
 
-    virtual ~Expression() {};
+    Expression() {nb_inst++;};
+
+    virtual ~Expression() {nb_inst--;};
 
     virtual void display(std::ostream & out) const = 0;
 
@@ -31,6 +33,8 @@ public:
             * Derivative of Variable "x" with respect to string "x" is 1
             * Derivative of Variable "y" with respect to string "x" is 0
      */
+
+    
 
 
 private:

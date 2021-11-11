@@ -74,3 +74,25 @@ TEST( TestExp, TestDeriveNombre ) {
     EXPECT_EQ( os.str(), "0" );
 }
 
+TEST( TestExp, TestAddExp ) {
+    int init_nb_instance = Expression::nb_inst;
+    Variable* v = new Variable{ "x" };
+    Nombre* n = new Nombre{ 1 };
+    Expression* derive = v->derive( "x" );
+    std::ostringstream os;
+    os << derive->nb_inst;
+    EXPECT_EQ( os.str(), std::to_string(init_nb_instance + 3));
+}
+
+TEST( TestExp, TestDestructExp ) {
+    int init_nb_instance = Expression::nb_inst;
+    Variable* v = new Variable{ "x" };
+    Nombre* n = new Nombre{ 1 };
+    Expression* derive = v->derive( "x" );
+    std::ostringstream os;
+    delete v;
+    delete n;
+    os << derive->nb_inst;
+    EXPECT_EQ( os.str(), std::to_string(init_nb_instance + 1));
+}
+
