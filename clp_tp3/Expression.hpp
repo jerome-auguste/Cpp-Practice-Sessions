@@ -34,8 +34,7 @@ public:
             * Derivative of Variable "y" with respect to string "x" is 0
      */
 
-    
-
+    virtual Expression* clone() const = 0;
 
 private:
 };

@@ -16,5 +16,9 @@ public:
         return new Addition (left_exp_->derive(name), right_exp_->derive(name));
     }
 
+    Expression* clone() const {
+        return new Addition (left_exp_->clone(), right_exp_->clone());
+    }
+
 private:
 };

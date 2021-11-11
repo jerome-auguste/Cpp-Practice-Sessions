@@ -20,6 +20,10 @@ public:
         return new Nombre{ 0 };
     }
 
+    Expression* clone() const {
+        return new Variable{name_};
+    }
+
     
 
 private:
