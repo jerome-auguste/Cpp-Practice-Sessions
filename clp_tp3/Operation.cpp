@@ -29,6 +29,10 @@ public:
     
     virtual Expression* derive(std::string name) const = 0;
 
+    virtual Expression* simplify() const = 0;
+
+    virtual std::string get_type() const = 0;
+
 protected:
     Expression* left_exp_;
     Expression* right_exp_;

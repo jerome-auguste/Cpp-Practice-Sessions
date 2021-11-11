@@ -192,3 +192,135 @@ TEST( TestOp, TestMulDeriveConst ) {
     os << *deriv;
     EXPECT_EQ( os.str(), "0*x+0*5" );
 }
+
+TEST( TestSimpl, TestSymplifyAddVar0 ) {
+    Nombre n{ 0 };
+    Variable v{ "x" };
+    Addition add{ &v, &n };
+    Expression* simp = add.simplify();
+    std::ostringstream os;
+    os << *simp;
+    delete simp;
+    EXPECT_EQ( os.str(), "x" );
+}
+
+TEST( TestSimpl, TestSymplifyAdd0Var ) {
+    Nombre n{ 0 };
+    Variable v{ "x" };
+    Addition add{ &n, &v };
+    Expression* simp = add.simplify();
+    std::ostringstream os;
+    os << *simp;
+    delete simp;
+    EXPECT_EQ( os.str(), "x" );
+}
+
+TEST( TestSimpl, TestSymplifyMultVar0 ) {
+    Nombre n{ 0 };
+    Variable v{ "x" };
+    Multiplication mult{ &v, &n };
+    Expression* simp = mult.simplify();
+    std::ostringstream os;
+    os << *simp;
+    delete simp;
+    EXPECT_EQ( os.str(), "0" );
+}
+
+TEST( TestSimpl, TestSymplifyMult0Var ) {
+    Nombre n{ 0 };
+    Variable v{ "x" };
+    Multiplication mult{ &n, &v };
+    Expression* simp = mult.simplify();
+    std::ostringstream os;
+    os << *simp;
+    delete simp;
+    EXPECT_EQ( os.str(), "0" );
+}
+
+TEST( TestSimpl, TestSymplifyMultVar1 ) {
+    Nombre n{ 1 };
+    Variable v{ "x" };
+    Multiplication mult{ &v, &n };
+    Expression* simp = mult.simplify();
+    std::ostringstream os;
+    os << *simp;
+    delete simp;
+    EXPECT_EQ( os.str(), "x" );
+}
+
+TEST( TestSimpl, TestSymplifyMult1Var ) {
+    Nombre n{ 1 };
+    Variable v{ "x" };
+    Multiplication mult{ &n, &v };
+    Expression* simp = mult.simplify();
+    std::ostringstream os;
+    os << *simp;
+    delete simp;
+    EXPECT_EQ( os.str(), "x" );
+}
+
+TEST( TestSimpl, TestSymplifyAddNomNom ) {
+    Nombre n1{ 2 };
+    Nombre n2{ 3 };
+    Addition add{ &n1, &n2 };
+    Expression* simp = add.simplify();
+    std::ostringstream os;
+    os << *simp;
+    delete simp;
+    EXPECT_EQ( os.str(), "5" );
+}
+
+TEST( TestSimpl, TestSymplifyMultNomNom ) {
+    Nombre n1{ 2 };
+    Nombre n2{ 3 };
+    Multiplication mult{ &n1, &n2 };
+    Expression* simp = mult.simplify();
+    std::ostringstream os;
+    os << *simp;
+    delete simp;
+    EXPECT_EQ( os.str(), "6" );
+}
+
+TEST( TestSimpl, TestSimplifyAdd00) {
+    Addition add{ new Nombre{ 0 }, new Nombre{ 0 }};
+    Expression* simp = add.simplify();
+    std::ostringstream os;
+    os << *simp;
+    delete simp;
+    EXPECT_EQ( os.str(), "0" );
+}
+
+TEST( TestSimpl, TestSimplifyAddExpr ) {
+    Variable v{ "x" };
+    Nombre n{ 2 };
+    Addition add{ &n, &v};
+    Expression* simp = add.simplify();
+    std::ostringstream os;
+    os << *simp;
+    delete simp;
+    EXPECT_EQ( os.str(), "2+x" );
+}
+
+TEST( TestSimpl, TestSimplifyMultExpr ) {
+    Variable v{ "x" };
+    Nombre n{ 2 };
+    Multiplication mult{ &n, &v};
+    Expression* simp = mult.simplify();
+    std::ostringstream os;
+    os << *simp;
+    delete simp;
+    EXPECT_EQ( os.str(), "2*x" );
+}
+
+TEST( TestSimpl, TestSimplifyRecursion ) {
+    Variable v1{ "x" };
+    Variable v2{ "y" };
+    Nombre n1{ 1 };
+    Nombre n0{ 0 };
+    Addition add{ new Multiplication{ &v1, &n1}, new Multiplication{ &v2, &n0 } };
+    Expression* simp = add.simplify();
+    std::ostringstream os;
+    os << *simp;
+    delete simp;
+    EXPECT_EQ( os.str(), "x" );
+}

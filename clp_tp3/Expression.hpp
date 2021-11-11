@@ -36,6 +36,11 @@ public:
 
     virtual Expression* clone() const = 0;
 
+    virtual Expression* simplify() const = 0;
+
+    virtual std::string get_type() const = 0;
+
+
 private:
 };
 

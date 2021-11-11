@@ -24,6 +24,14 @@ public:
         return new Variable{name_};
     }
 
+    Expression* simplify() const {
+        return this->clone();
+    }
+
+    std::string get_type() const {
+        return "Variable";
+    }
+
     
 
 private:

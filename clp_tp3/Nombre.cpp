@@ -20,7 +20,17 @@ public:
         return new Nombre{value_};
     }
 
+    Expression* simplify() const {
+        return this->clone();
+    }
 
+    std::string get_type() const {
+        return "Nombre";
+    }
+
+    long get_value() const {
+        return value_;
+    }
 
 
 private:
