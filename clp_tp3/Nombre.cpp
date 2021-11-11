@@ -8,6 +8,11 @@ public:
 
     ~Nombre() {};
 
+    void display(std::ostream & out) const {
+        out << value_;
+    }
+
+
 private:
     long value_;
 };
