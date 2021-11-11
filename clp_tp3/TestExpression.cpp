@@ -14,6 +14,7 @@
 #include "Expression.cpp"
 #include "Nombre.cpp"
 #include "Variable.cpp"
+#include "Addition.cpp"
 
  
 int main( int argc, char * argv[] ) {
@@ -96,3 +97,40 @@ TEST( TestExp, TestDestructExp ) {
     EXPECT_EQ( os.str(), std::to_string(init_nb_instance + 1));
 }
 
+TEST( TestOp, TestAddVarNom ) {
+    Variable v{ "x" };
+    Nombre n{ 1 };
+    Addition add{&v, &n};
+    std::ostringstream os;
+    os << add;
+    EXPECT_EQ( os.str(), "x+1" );
+}
+
+TEST( TestOp, TestAddVarVar ) {
+    Variable v1{ "x" };
+    Variable v2{ "y" };
+    Addition add{&v1, &v2};
+    std::ostringstream os;
+    os << add;
+    EXPECT_EQ( os.str(), "x+y" );
+}
+
+TEST( TestOp, TestAddDerive) {
+    Variable v{ "x" };
+    Nombre n{ 2 };
+    Addition add{ &v, &n };
+    Expression* derive = add.derive("x");
+    std::ostringstream os;
+    os << *derive;
+    EXPECT_EQ( os.str(), "1+0");
+}
+
+TEST( TestOp, TestAddDeriveConst) {
+    Variable v1{ "x" };
+    Variable v2{ "y" };
+    Addition add{ &v1, &v2 };
+    Expression* derive = add.derive("z");
+    std::ostringstream os;
+    os << *derive;
+    EXPECT_EQ( os.str(), "0+0");
+}
