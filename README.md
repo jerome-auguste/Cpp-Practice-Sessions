@@ -15,4 +15,4 @@ Practice labs for the ProgDev course in System Programming and Programming Langu
 
 - [clp_tp2](https://gitlab-student.centralesupelec.fr/2018augustej/tp_3if1020/-/tree/master/clp_tp2) introduces to OOP and gtests in C++.
 
-- [clp_tp3](https://gitlab-student.centralesupelec.fr/2018augustej/tp_3if1020/-/tree/master/clp_tp3) is yet to be done.
+- [clp_tp3](https://gitlab-student.centralesupelec.fr/2018augustej/tp_3if1020/-/tree/master/clp_tp3) is implementing low level operations.
